@@ -25,7 +25,7 @@
 <meta property="og:image" content="http://example.com/2020/09/23/apache2%E5%AE%89%E8%A3%85ssl%E8%AF%81%E4%B9%A6/image-b0d2e52ca4d84279ba891ea54cc7cb0e.png">
 <meta property="og:image" content="http://example.com/2020/09/23/apache2%E5%AE%89%E8%A3%85ssl%E8%AF%81%E4%B9%A6/image-78f9b611330341f793fcfadcf18b4d51.png">
 <meta property="article:published_time" content="2020-09-23T14:47:15.000Z">
-<meta property="article:modified_time" content="2020-09-23T15:29:59.503Z">
+<meta property="article:modified_time" content="2021-02-21T05:13:34.117Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2020/09/23/apache2%E5%AE%89%E8%A3%85ssl%E8%AF%81%E4%B9%A6/turbo-turbo-ulitka-snail-5129-f3b7f41344f84b9fbe86f767c1c97f4b.jpg">
@@ -208,6 +208,12 @@
 <h2 id="https域名反代"><a href="#https域名反代" class="headerlink" title="https域名反代"></a>https域名反代</h2><p>编辑001-ssl.conf，添加</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ProxyPass &#x2F; http:&#x2F;&#x2F;a.com:8080&#x2F;</span><br><span class="line">ProxyPassReverse &#x2F; http:&#x2F;&#x2F;a.com:8080&#x2F;</span><br></pre></td></tr></table></figure>
 <p><img src="/2020/09/23/apache2%E5%AE%89%E8%A3%85ssl%E8%AF%81%E4%B9%A6/image-78f9b611330341f793fcfadcf18b4d51.png" alt="image-78f9b611330341f793fcfadcf18b4d51"></p>
+<h2 id="域名反代理"><a href="#域名反代理" class="headerlink" title="域名反代理"></a>域名反代理</h2><p>查看apache2已开启的模块</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apachectl -M</span><br></pre></td></tr></table></figure>
+<p>开启模块</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a2enmod rewrite</span><br><span class="line">a2enmod proxy</span><br><span class="line">a2enmod proxy_http</span><br></pre></td></tr></table></figure>
+<p>配置虚拟文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;VirtualHost *:80&gt;</span><br><span class="line">ServerName youtube.i23.pw</span><br><span class="line">ServerAdmin webmaster@localhost</span><br><span class="line">SSLProxyEngine on</span><br><span class="line">ProxyRequests Off</span><br><span class="line">&lt;Proxy *&gt;</span><br><span class="line">  Order Deny,Allow</span><br><span class="line">  Allow from all</span><br><span class="line">&lt;&#x2F;Proxy&gt;</span><br><span class="line">ProxyPass &#x2F;  https:&#x2F;&#x2F;www.youtube.com&#x2F;</span><br><span class="line">ProxyPassReverse &#x2F; https:&#x2F;&#x2F;www.youtube.com&#x2F;</span><br><span class="line">&lt;&#x2F;VirtualHost&gt;</span><br></pre></td></tr></table></figure>
 
       
 
